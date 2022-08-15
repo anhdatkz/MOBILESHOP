@@ -1,0 +1,63 @@
+import productImg from '../../assets/images/samsung-galaxy-s22-ultra-1-1.jpg'
+import apiConfig from '../../api/apiConfigs'
+import { useState, useEffect } from 'react'
+import { FaStar } from 'react-icons/fa'
+import "./ContentItem.css"
+import { Link } from 'react-router-dom'
+import { scrollTop } from '../../App';
+
+function ContentItem(props) {
+    const { title } = props
+    const [loaiSP, setLoaiSP] = useState([])
+    const [cartItems, setCartItems] = useState([])
+
+    useEffect(() => {
+        fetch(`${apiConfig.baseUrl}/loaisanpham`)
+            .then((res) => res.json())
+            .then((data) => {
+                setLoaiSP(data)
+                console.log(data)
+            })
+    }, [])
+
+    const handleClick = (item) => {
+        console.log(item)
+        if (cartItems.indexOf(item) !== -1) return;
+        setCartItems([...cartItems, item]);
+        console.log(cartItems)
+    };
+
+    return (
+        <>
+            <div className='content__item'>
+                <div className='content__item-title'>{title}</div>
+                <div className='content__item-list'>
+                    <ul className='list-product'>
+                        {loaiSP.map((loaisp, index) => (
+                            <li className='product' key={index}>
+                                <Link to={`/detail-product/${loaisp.maloai}`} onClick={scrollTop}>
+                                    <div className='product__img'>
+                                        <img src={loaisp.anh} />
+                                    </div>
+                                    <div className='product__name'>{loaisp.tenloai}</div>
+                                    <div className='product__old-price'>1200 $</div>
+                                    <div className='product__new-price'>{loaisp.thayDoiGiasLSP[0].giamoi}$</div>
+                                    <ul className='product__star'>
+                                        <li><FaStar /></li>
+                                        <li><FaStar /></li>
+                                        <li><FaStar /></li>
+                                        <li><FaStar /></li>
+                                        <li><FaStar /></li>
+                                    </ul>
+                                </Link>
+                                <button className='btn-add-cart btn btn-primary' onClick={() => handleClick(loaisp)}>Thêm vào giỏ hàng</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default ContentItem
