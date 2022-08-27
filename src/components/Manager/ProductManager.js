@@ -1,8 +1,22 @@
 import "./Manager.css"
-import {FaEdit, FaTrashAlt} from "react-icons/fa"
+import { FaEdit, FaTrashAlt } from "react-icons/fa"
+import { useState, useEffect } from 'react'
+import apiConfig from '../../api/apiConfigs'
 
-function ProductManager(){
-    return(
+function ProductManager() {
+    const [loaiSP, setLoaiSP] = useState([])
+
+    useEffect(() => {
+        fetch(`${apiConfig.baseUrl}/loaisanpham`)
+            .then((res) => res.json())
+            .then((data) => {
+                setLoaiSP(data)
+                console.log(data)
+            })
+    }, [])
+
+
+    return (
         <>
             <div className="manager w-75">
                 <div className="product-manager">
@@ -21,16 +35,18 @@ function ProductManager(){
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>SAMSUNG</td>
-                                <td><img className="product-img-manager" src="https://cdn.tgdd.vn/Products/Images/42/230529/TimerThumb/250262.jpg" alt="" /></td>
-                                <td>SAMSUNG</td>
-                                <td>20</td>
-                                <td className="d-flex">
-                                    <div className="edit mx-5"><FaEdit/></div>
-                                    <div className="delete"><FaTrashAlt/></div>
-                                </td>
-                            </tr>
+                            {loaiSP.map((lsp, index) => (
+                                <tr key={index}>
+                                    <td>{lsp.maloai}</td>
+                                    <td><img className="product-img-manager" src={lsp.anh} alt="" /></td>
+                                    <td>{lsp.tenloai}</td>
+                                    <td>{lsp.soluongton}</td>
+                                    <td className="d-flex">
+                                        <div className="edit mx-5"><FaEdit /></div>
+                                        <div className="delete"><FaTrashAlt /></div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

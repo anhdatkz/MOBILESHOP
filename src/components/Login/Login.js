@@ -8,6 +8,7 @@ function Login() {
     const [username, setUserName] = useState("")
     const [password, setPassWord] = useState("")
     const [accounts, setAccounts] = useState([])
+    const [role, setRole] = useState("")
 
     let navigate = useNavigate()
 
@@ -21,41 +22,43 @@ function Login() {
 
     console.log(accounts)
 
-    const onSubmitLogin  = (e) =>{
+    const onSubmitLogin = (e) => {
         e.preventDefault()
+        localStorage.setItem('isLogin', false)
         let acc = accounts.find(a => a.matk.trim() === username && a.password.trim() === password)
         console.log(acc)
-
-        if(acc === undefined){
+        if (acc === undefined) {
             alert("Đăng nhập thất bại! Mời bạn kiểm tra lại Username or PassWord!")
             return
         }
-        else{
-            if(acc.quyen.maquyen.trim() === "NV"){
-                navigate("/manager/brand")
+        else {
+            localStorage.setItem('isLogin', true)
+            setRole(acc.quyen.maquyen.trim())
+            if (acc.quyen.maquyen.trim() === "NV") {
+                navigate("/manager")
                 alert("Đăng nhập thành công!")
             }
-            else if(acc.quyen.maquyen.trim() === "KH"){
-                navigate("/")
+            else if (acc.quyen.maquyen.trim() === "KH") {
+                navigate("/user")
                 alert("Đăng nhập thành công!")
             }
         }
-        
+        console.log(localStorage.getItem("isLogin"))
         scrollTop()
     }
 
-    
+
     return (
         <>
             <form className='container p-3 login-form' onSubmit={onSubmitLogin}>
-                <h3>Sign In</h3>
+                <h3>Đăng nhập</h3>
 
                 <div className="mb-3">
-                    <label>Username</label>
+                    <label>Tên đăng nhập</label>
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter username"
+                        placeholder="Tên đăng nhập"
                         value={username}
                         onChange={e => setUserName(e.target.value.trim())}
                         required
@@ -63,11 +66,11 @@ function Login() {
                 </div>
 
                 <div className="mb-3">
-                    <label>Password</label>
+                    <label>Mật khẩu</label>
                     <input
                         type="password"
                         className="form-control"
-                        placeholder="Enter password"
+                        placeholder="Mật khẩu"
                         value={password}
                         onChange={e => setPassWord(e.target.value.trim())}
                         required
@@ -89,14 +92,14 @@ function Login() {
 
                 <div className="d-flex justify-content-between">
                     <button type="submit" className="btn btn-primary">
-                        Submit
+                        Đăng nhập
                     </button>
                     <button type="submit" className="btn btn-primary">
-                        <Link to="/register" className='text-white'>Register</Link>
+                        <Link to="/register" className='text-white'>Đăng ký</Link>
                     </button>
                 </div>
                 <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
+                    Quên <a href="#">mật khẩu?</a>
                 </p>
             </form>
         </>

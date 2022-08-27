@@ -1,8 +1,22 @@
 import "./Manager.css"
-import {FaEdit, FaTrashAlt} from "react-icons/fa"
+import { FaEdit, FaTrashAlt } from "react-icons/fa"
+import { useState, useEffect } from 'react'
+import apiConfigs from "../../api/apiConfigs"
 
-function EmployeeManager(){
-    return(
+function EmployeeManager() {
+    const [nhanviens, setNhanViens] = useState([])
+
+    useEffect(() => {
+        fetch(`${apiConfigs.baseUrl}/nhanvien`)
+            .then((res) => res.json())
+            .then((data) => {
+                setNhanViens(data)
+            })
+    }, [])
+    console.log(nhanviens)
+
+
+    return (
         <>
             <div className="manager w-75">
                 <div className="employee">
@@ -19,14 +33,16 @@ function EmployeeManager(){
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>NV01</td>
-                                <td>Lê Phước Anh Đạt</td>
-                                <td className="d-flex">
-                                    <div className="edit mx-5"><FaEdit/></div>
-                                    <div className="delete"><FaTrashAlt/></div>
-                                </td>
-                            </tr>
+                            {nhanviens.map((nv, index) => (
+                                <tr key={index}>
+                                    <td>{nv.manv}</td>
+                                    <td>{nv.hoten}</td>
+                                    <td className="d-flex">
+                                        <div className="edit mx-5"><FaEdit /></div>
+                                        <div className="delete"><FaTrashAlt /></div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

@@ -17,15 +17,17 @@ function OrderManager(){
                                 <th>Tên KH</th>
                                 <th>Ngày đặt</th>
                                 <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
                                 <th>Duyệt đơn</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>SAMSUNG</td>
-                                <td>SAMSUNG</td>
-                                <td></td>
-                                <td></td>
+                                <td>DH001</td>
+                                <td>Nguyễn Văn An</td>
+                                <td>12/8/2022</td>
+                                <td>1998 $</td>
+                                <td>Đã duyệt</td>
                                 <td>
                                     <FaEdit/>
                                 </td>

@@ -10,6 +10,10 @@ import AdminProduct from "./page/Admin/AdminProduct"
 import AdminReport from "./page/Admin/AdminReport"
 import PayPal from "./components/Paypal/Paypal"
 import Brand from "./page/SingleBrand/Brand"
+import UserNotifi from "./page/User/UserNotifi"
+import UserOrders from "./page/User/UserOrders"
+import UserProfile from "./page/User/UserProfile"
+import UserReturn from "./page/User/UserReturn"
 
 
 
@@ -21,15 +25,20 @@ const publicRoutes = [
     { path: "/checkout", component: PayPal },
     { path: "/login", component: Login },
     { path: "/register", component: Register },
-    { path: "/manager", component: Admin },
+    { path: "/user/profile", component: UserProfile },
+    { path: "/user/notifications", component: UserNotifi },
+    { path: "/user/orders", component: UserOrders },
+    { path: "/user/returns", component: UserReturn },
 ]
 
 const privateRoutes = [
+    { path: "/manager", component: Admin },
     { path: "/manager/brand", component: Admin },
     { path: "/manager/product", component: AdminProduct },
     { path: "/manager/employee", component: AdminEmployee },
     { path: "/manager/order", component: AdminOrder },
     { path: "/manager/report", component: AdminReport },
+    { path: "/manager/account", component: AdminReport },
 ]
 
 export { publicRoutes, privateRoutes }

@@ -41,10 +41,10 @@ function ProductsDetail() {
 
                     <div className="section-detail__price">
                         <div className="price">{price} $</div>
-                        <div className="discount">50%</div>
+                        <div className="discount"></div>
                     </div>
                     <div className="section-detail__price-discount">
-                        $250
+                        
                     </div>
                     <div className="section-detail__add-cart">
                         <div className="quantity">
@@ -90,6 +90,10 @@ function ProductsDetail() {
                     <li class="list-group-item d-flex">
                         <div className='w-25'>Số lượng </div>
                         <div>{product.soluongton}</div>
+                    </li>
+                    <li class="list-group-item d-flex">
+                        <div className='w-25'>Bảo hành</div>
+                        <div>{product.thoigianbh} tháng</div>
                     </li>
                 </ul>
             </div>
