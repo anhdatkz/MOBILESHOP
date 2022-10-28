@@ -2,6 +2,16 @@
     margin-top: 66px;
 }
 
+.cart-empty{
+    text-align: center;
+    padding: 50px 0;
+}
+
+.cart-empty h5, .cart-empty button{
+    margin-top: 20px;
+}
+
+
 table td{
     line-height: 66px;
 }

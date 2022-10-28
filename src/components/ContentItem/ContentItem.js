@@ -5,9 +5,13 @@ import { FaStar } from 'react-icons/fa'
 import "./ContentItem.css"
 import { Link } from 'react-router-dom'
 import { scrollTop } from '../../App';
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../features/cartSlice'
 
 function ContentItem(props) {
     const { title } = props
+    const dispatch = useDispatch()
+
     const [loaiSP, setLoaiSP] = useState([])
     const [cartItems, setCartItems] = useState([])
 
@@ -20,12 +24,9 @@ function ContentItem(props) {
             })
     }, [])
 
-    const handleClick = (item) => {
-        console.log(item)
-        if (cartItems.indexOf(item) !== -1) return;
-        setCartItems([...cartItems, item]);
-        console.log(cartItems)
-    };
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product))
+    }
 
     return (
         <>
@@ -50,7 +51,7 @@ function ContentItem(props) {
                                         <li><FaStar /></li>
                                     </ul>
                                 </Link>
-                                <button className='btn-add-cart btn btn-primary' onClick={() => handleClick(loaisp)}>Thêm vào giỏ hàng</button>
+                                <button className='btn-add-cart btn btn-primary' onClick={() => handleAddToCart(loaisp)}>Thêm vào giỏ hàng</button>
                             </li>
                         ))}
                     </ul>

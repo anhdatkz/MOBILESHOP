@@ -3,10 +3,19 @@ import apiConfig from '../../api/apiConfigs'
 import { useParams } from "react-router-dom"
 import { FaPlus, FaMinus } from "react-icons/fa"
 import { useState, useEffect } from "react"
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../features/cartSlice'
 function ProductsDetail() {
     const { id } = useParams()
     const [product, setProduct] = useState({})
     const [price, setPrice] = useState(0)
+
+    const dispatch =  useDispatch()
+
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product))
+    }
+
     useEffect(() => {
         fetch(`${apiConfig.baseUrl}/loaisanpham/${id}`)
             .then((res) => res.json())
@@ -52,7 +61,7 @@ function ProductsDetail() {
                             <input type="text" className="quan" defaultValue={1} />
                             <button className="btn btn-primary ins"><FaPlus /></button>
                         </div>
-                        <button className="btn btn-primary">
+                        <button className="btn btn-primary" onClick={() => handleAddToCart(product)}>
                             <img src="./asset/images/icon-cart.svg" alt="" />
                             Thêm vào giỏ hàng
                         </button>

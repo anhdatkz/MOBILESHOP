@@ -1,6 +1,7 @@
 #nav{
     margin-top: 66px;
     position: relative;
+    border-bottom: 1px solid #ccc;
 }
 
 #nav .nav__list{

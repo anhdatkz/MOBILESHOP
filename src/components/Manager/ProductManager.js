@@ -1,5 +1,5 @@
 import "./Manager.css"
-import { FaEdit, FaTrashAlt } from "react-icons/fa"
+import { FaEdit, FaTrashAlt, FaList } from "react-icons/fa"
 import { useState, useEffect } from 'react'
 import apiConfig from '../../api/apiConfigs'
 
@@ -30,7 +30,8 @@ function ProductManager() {
                                 <th>Mã loại</th>
                                 <th>Ảnh</th>
                                 <th>Tên loại</th>
-                                <th>Số lượng tồn</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -41,9 +42,11 @@ function ProductManager() {
                                     <td><img className="product-img-manager" src={lsp.anh} alt="" /></td>
                                     <td>{lsp.tenloai}</td>
                                     <td>{lsp.soluongton}</td>
-                                    <td className="d-flex">
-                                        <div className="edit mx-5"><FaEdit /></div>
+                                    <td>{lsp.thayDoiGiasLSP[0].giamoi}</td>
+                                    <td className="d-flex justify-content-between">
+                                        <div className="edit"><FaEdit/></div>
                                         <div className="delete"><FaTrashAlt /></div>
+                                        <div className="detail-list"><FaList/></div>
                                     </td>
                                 </tr>
                             ))}

@@ -3,7 +3,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../assets/images/logo.jpg'
 import { FaShoppingCart, FaBell, FaUserCog, FaSearch } from "react-icons/fa"
 import { scrollTop } from '../../App'
+import { useSelector } from 'react-redux'
+
+
 function Header(){
+    const cart = useSelector((state) => state.cart)
+    
+
     return(
        <>
         <header id="header">
@@ -26,7 +32,7 @@ function Header(){
                     <div className='item cart'>
                         <Link to="/detail-cart" onClick={scrollTop}>
                             <FaShoppingCart></FaShoppingCart>
-                            <span className="header__cart-number">3</span>
+                            <span className="header__cart-number">{cart.cartItems.length}</span>
                         </Link>
                         {/* <span className="header__cart-number">3</span> */}
                     </div>

@@ -26,7 +26,7 @@ function Login() {
         e.preventDefault()
         localStorage.setItem('isLogin', false)
         let acc = accounts.find(a => a.matk.trim() === username && a.password.trim() === password)
-        console.log(acc)
+        console.log("acc: " + acc)
         if (acc === undefined) {
             alert("Đăng nhập thất bại! Mời bạn kiểm tra lại Username or PassWord!")
             return
@@ -39,7 +39,7 @@ function Login() {
                 alert("Đăng nhập thành công!")
             }
             else if (acc.quyen.maquyen.trim() === "KH") {
-                navigate("/user")
+                navigate("/user/profile")
                 alert("Đăng nhập thành công!")
             }
         }

@@ -2,6 +2,8 @@ import { Route, Routes, Router, Navigate} from 'react-router-dom'
 import { publicRoutes, privateRoutes } from './Routes';
 import { FaRegArrowAltCircleUp } from "react-icons/fa"
 import { Fragment, useState, useEffect } from 'react';
+import { ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header/Header';
@@ -53,23 +55,16 @@ function App() {
         {privateRoutes.map((route, index) => {
           // const Page = route.component
           return <Route key={index} path={route.path} element={
-            <PrivateRoute>
               <route.component />
-            </PrivateRoute>
             } />
         })}
       </Routes>
-      {/* <Routes>
-        {privateRoutes.map((route, index) => {
-          // const Page = route.component
-          return <Route key={index} path={route.path} element={<route.component />} />
-        })}
-      </Routes> */}
       {(showGoToTop) ? (
         <div className="scroll-top" onClick={scrollTop}>
           <FaRegArrowAltCircleUp />
         </div>
       ) : <Fragment />}
+      <ToastContainer/>
       {/* <Footer /> */}
     </>
   );

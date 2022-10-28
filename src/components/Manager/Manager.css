@@ -4,9 +4,18 @@
     position: sticky;
     float: right;
     padding: 20px;
+    font-size: 14px;
 }
 
 .product-img-manager{
     width: 70px;
     height: 50px;
 }
+
+.edit svg{
+    color: rgb(255, 136, 0);
+}   
+
+.detail-list svg{
+    color: rgb(0, 94, 255);
+}   

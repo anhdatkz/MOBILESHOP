@@ -2,7 +2,7 @@ import "./Paypal.css"
 import { useEffect, useRef } from "react"
 
 
-function PayPal({isCheckout}) {
+function PayPal({ isCheckout }) {
     const paypal = useRef();
 
     useEffect(() => {
@@ -34,9 +34,19 @@ function PayPal({isCheckout}) {
     }, []);
 
     return (
-        <div className="paypal">
-            <div ref={paypal}></div>
-        </div>
+        <>
+            <div>
+                <div className="customer">
+                    <div className="name"></div>
+                    <div className="address"></div>
+                    <div className="phone"></div>
+                    <div className="email"></div>
+                </div>
+                <div className="paypal">
+                    <div ref={paypal}></div>
+                </div>
+            </div>
+        </>
     )
 }
 
