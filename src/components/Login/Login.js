@@ -2,7 +2,9 @@ import './Login.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { scrollTop } from '../../App'
-import apiConfig from '../../api/apiConfigs'
+import { toast } from "react-toastify"
+import apiConfigs from '../../api/apiConfigs'
+
 
 function Login() {
     const [username, setUserName] = useState("")
@@ -12,47 +14,111 @@ function Login() {
 
     let navigate = useNavigate()
 
-    useEffect(() => {
-        fetch(`${apiConfig.baseUrl}/taikhoan`)
-            .then((res) => res.json())
-            .then((data) => {
-                setAccounts(data)
-            })
-    }, [])
+    // useEffect(() => {
+    //     fetch(`${apiConfigs.baseUrl}/taikhoan`)
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             setAccounts(data)
+    //         })
+    // }, [])
 
     console.log(accounts)
 
-    const onSubmitLogin = (e) => {
-        e.preventDefault()
+    const login = () => {
         localStorage.setItem('isLogin', false)
-        let acc = accounts.find(a => a.matk.trim() === username && a.password.trim() === password)
-        console.log("acc: " + acc)
-        if (acc === undefined) {
-            alert("Đăng nhập thất bại! Mời bạn kiểm tra lại Username or PassWord!")
-            return
+        const formData = {
+            matk: username,
+            password: password
         }
-        else {
-            localStorage.setItem('isLogin', true)
-            setRole(acc.quyen.maquyen.trim())
-            if (acc.quyen.maquyen.trim() === "NV") {
-                navigate("/manager")
-                alert("Đăng nhập thành công!")
-            }
-            else if (acc.quyen.maquyen.trim() === "KH") {
-                navigate("/user/profile")
-                alert("Đăng nhập thành công!")
-            }
-        }
-        console.log(localStorage.getItem("isLogin"))
-        scrollTop()
+
+        fetch(`${apiConfigs.baseUrl}/auth`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw Error(response.status)
+            })
+            .then((data) => {
+                toast.success("Đăng nhập thành công", {
+                    position: "top-center"
+                })
+
+                localStorage.setItem('isLogin', true)
+                localStorage.setItem('role', data.authorities[0])
+                setAccounts(data)
+
+                if(data.authorities[0] === "ROLE_USER"){
+                    navigate("/user/profile")
+                } else if(data.authorities[0] === "ROLE_ADMIN"){
+                    navigate("/manager")
+                }
+
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                toast.error("Tên đăng nhập hoặc mật khẩu không đúng", {
+                    position: "top-center"
+                })
+                // loadData()
+                console.error('Error:', error);
+            });
+
+            scrollTop()
     }
+
+    // const onSubmitLogin = (e) => {
+    //     const formData = {
+    //         matk: username,
+    //         password: password
+    //     }
+    //     login(formData)
+
+    //     scrollTop()
+    // }
+
+
+    // const onSubmitLogin = (e) => {
+    //     e.preventDefault()
+    //     localStorage.setItem('isLogin', false)
+    //     let acc = accounts.find(a => a.matk.trim() === username && a.password.trim() === password)
+    //     console.log("acc: " + acc)
+    //     if (acc === undefined) {
+    //         toast.error("Tên đăng nhập hoặc mật khẩu không đúng", {
+    //             position: "top-center"
+    //         })
+    //         return
+    //     }
+    //     else {
+    //         localStorage.setItem('isLogin', true)
+    //         setRole(acc.quyen.maquyen.trim())
+    //         if (acc.quyen.maquyen.trim() === "NV") {
+    //             navigate("/manager")
+    //             toast.success("Đăng nhập thành công", {
+    //                 position: "top-center"
+    //             })
+    //         }
+    //         else if (acc.quyen.maquyen.trim() === "KH") {
+    //             navigate("/user/profile")
+    //             toast.success("Đăng nhập thành công", {
+    //                 position: "top-center"
+    //             })
+    //         }
+    //     }
+    //     console.log(localStorage.getItem("isLogin"))
+    //     scrollTop()
+    // }
 
 
     return (
         <>
-            <form className='container p-3 login-form' onSubmit={onSubmitLogin}>
+            <form className='container p-3 login-form'>
                 <h3>Đăng nhập</h3>
-
                 <div className="mb-3">
                     <label>Tên đăng nhập</label>
                     <input
@@ -91,7 +157,7 @@ function Login() {
                 </div>
 
                 <div className="d-flex justify-content-between">
-                    <button type="submit" className="btn btn-primary">
+                    <button type='button' className="btn btn-primary" onClick={login}>
                         Đăng nhập
                     </button>
                     <button type="submit" className="btn btn-primary">

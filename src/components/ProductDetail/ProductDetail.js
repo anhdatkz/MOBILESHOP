@@ -56,11 +56,11 @@ function ProductsDetail() {
                         
                     </div>
                     <div className="section-detail__add-cart">
-                        <div className="quantity">
+                        {/* <div className="quantity">
                             <button className="btn btn-primary des"><FaMinus /></button>
                             <input type="text" className="quan" defaultValue={1} />
                             <button className="btn btn-primary ins"><FaPlus /></button>
-                        </div>
+                        </div> */}
                         <button className="btn btn-primary" onClick={() => handleAddToCart(product)}>
                             <img src="./asset/images/icon-cart.svg" alt="" />
                             Thêm vào giỏ hàng

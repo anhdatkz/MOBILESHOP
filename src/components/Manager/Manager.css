@@ -1,10 +1,25 @@
 .manager{
     margin-top: 66px;
-    margin-left: 25%;
-    position: sticky;
-    float: right;
+    margin-left: 200px;
+    position: absolute;
+    /* position: sticky;
+    float: right; */
     padding: 20px;
     font-size: 14px;
+    width: calc(100% - 200px);
+    height: 1000px;
+}
+
+.employee,
+.order,
+.product-manager,
+.report,
+.brand{
+    width: 100%;
+}
+
+.action{
+    padding: 0 10px;
 }
 
 .product-img-manager{
@@ -18,4 +33,9 @@
 
 .detail-list svg{
     color: rgb(0, 94, 255);
-}   
+}
+
+.status{
+    font-weight: 700;
+    color: rgb(0, 147, 7);
+}

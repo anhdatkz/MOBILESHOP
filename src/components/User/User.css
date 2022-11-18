@@ -1,0 +1,45 @@
+.user{
+    margin-top: 66px;
+    margin-left: 200px;
+    position: absolute;
+    /* position: sticky;
+    float: right; */
+    padding: 0 20px;
+    font-size: 14px;
+    width: calc(100% - 200px);
+    height: 1000px;
+}
+
+.user-title{
+    display: block;
+    padding-bottom: 20px;
+}
+
+.user-profile > form{
+    display: flex;
+    flex-direction: column;
+}
+
+.frofile-item > div{
+    display: flex;
+    padding: 10px
+}
+
+.frofile-item > div > label{
+    width: 20%;
+    color: rgb(85 85 85 / 80%);
+}
+
+.frofile-item > div > div{
+    width: 80%;
+}
+
+.frofile-item  div input{
+    padding: 5px;
+}
+
+.frofile-item > button{
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 100px;
+}

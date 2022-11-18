@@ -1,9 +1,9 @@
 import UserSidebar from "../../components/Sidebar/UserSidebar";
 
-export default function UserManager(params) {
+export default function UserOrderHistory(params) {
     return(
         <>
-        <UserSidebar/>
+        <UserSidebar></UserSidebar>
         </>
     )
 };

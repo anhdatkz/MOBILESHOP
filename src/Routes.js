@@ -12,6 +12,7 @@ import PayPal from "./components/Paypal/Paypal"
 import Brand from "./page/SingleBrand/Brand"
 import UserNotifi from "./page/User/UserNotifi"
 import UserOrders from "./page/User/UserOrders"
+import UserOrderHistory from "./page/User/UserOrderHistory"
 import UserProfile from "./page/User/UserProfile"
 import UserReturn from "./page/User/UserReturn"
 
@@ -26,8 +27,9 @@ const publicRoutes = [
     { path: "/login", component: Login },
     { path: "/register", component: Register },
     { path: "/user/profile", component: UserProfile },
-    { path: "/user/notifications", component: UserNotifi },
+    { path: "/user/notifications", component: UserNotifi},
     { path: "/user/orders", component: UserOrders },
+    { path: "/user/orders-history", component: UserOrderHistory},
     { path: "/user/returns", component: UserReturn },
 ]
 

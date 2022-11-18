@@ -8,8 +8,18 @@ import { useSelector } from 'react-redux'
 
 function Header(){
     const cart = useSelector((state) => state.cart)
-    
+    let navigate = useNavigate()
 
+    const handleLogin = ()=>{
+        const islogin = localStorage.getItem("isLogin")
+        const role = localStorage.getItem("role")
+
+        if(islogin === "true"){
+            role === "ROLE_USER" ? navigate("/user/profile") : navigate("manager")
+        } else {
+            navigate("/login")
+        }
+    }
     return(
        <>
         <header id="header">
@@ -47,8 +57,8 @@ function Header(){
                 <div className='item notify'>
                     <FaBell></FaBell>
                 </div>
-                <div className='item login'>                    
-                    <Link to="/login"><FaUserCog></FaUserCog></Link>
+                <div className='item login' onClick={handleLogin}>                    
+                    <FaUserCog></FaUserCog>
                 </div>
             </div>
         </header>

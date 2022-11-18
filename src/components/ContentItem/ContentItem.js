@@ -42,7 +42,7 @@ function ContentItem(props) {
                                     </div>
                                     <div className='product__name'>{loaisp.tenloai}</div>
                                     <div className='product__old-price'>1200 $</div>
-                                    <div className='product__new-price'>{loaisp.thayDoiGiasLSP[0].giamoi}$</div>
+                                    <div className='product__new-price'>{loaisp.thayDoiGiasLSP[0].giamoi} $</div>
                                     <ul className='product__star'>
                                         <li><FaStar /></li>
                                         <li><FaStar /></li>
@@ -51,7 +51,7 @@ function ContentItem(props) {
                                         <li><FaStar /></li>
                                     </ul>
                                 </Link>
-                                <button className='btn-add-cart btn btn-primary' onClick={() => handleAddToCart(loaisp)}>Thêm vào giỏ hàng</button>
+                                {/* <button className='btn-add-cart btn btn-primary' onClick={() => handleAddToCart(loaisp)}>Thêm vào giỏ hàng</button> */}
                             </li>
                         ))}
                     </ul>

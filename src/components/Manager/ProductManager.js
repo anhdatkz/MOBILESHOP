@@ -18,7 +18,7 @@ function ProductManager() {
 
     return (
         <>
-            <div className="manager w-75">
+            <div className="manager">
                 <div className="product-manager">
                     <div className="product-header d-flex justify-content-between">
                         <h2 className="title">Loại sản phẩm</h2>

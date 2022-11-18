@@ -33,7 +33,7 @@ function BrandManager() {
 
     return (
         <>
-            <div className="manager w-75">
+            <div className="manager">
                 <div className="brand">
                     <div className="brand-header d-flex justify-content-between">
                         <h2 className="title">Hãng</h2>
@@ -53,8 +53,8 @@ function BrandManager() {
                                     <td>{hang.mahang}</td>
                                     <td>{hang.tenhang}</td>
                                     <td className="d-flex">
-                                        <div className="edit mx-5" onClick={() => showModal(hang.mahang)}><FaEdit/></div>
-                                        <div className="delete"><FaTrashAlt /></div>
+                                        <div className="action edit" onClick={() => showModal(hang.mahang)}><FaEdit/></div>
+                                        <div className="action delete"><FaTrashAlt /></div>
                                     </td>
                                 </tr>
                             ))}

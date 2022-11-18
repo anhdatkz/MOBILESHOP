@@ -53,14 +53,14 @@ function ContentItemBrand(props) {
                                     <div className='product__old-price'>1200 $</div>
                                     <div className='product__new-price'>{loaisp.thayDoiGiasLSP[0].giamoi}$</div>
                                     <ul className='product__star'>
-                                        <li><FaStar /></li>
-                                        <li><FaStar /></li>
-                                        <li><FaStar /></li>
-                                        <li><FaStar /></li>
-                                        <li><FaStar /></li>
+                                        <li><FaStar/></li>
+                                        <li><FaStar/></li>
+                                        <li><FaStar/></li>
+                                        <li><FaStar/></li>
+                                        <li><FaStar/></li>
                                     </ul>
                                 </Link>
-                                <button className='btn-add-cart btn btn-primary' onClick={() => handleClick(loaisp)}>Thêm vào giỏ hàng</button>
+                                {/* <button className='btn-add-cart btn btn-primary' onClick={() => handleClick(loaisp)}>Thêm vào giỏ hàng</button> */}
                             </li>
                         ))}
                     </ul>

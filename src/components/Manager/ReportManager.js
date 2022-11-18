@@ -4,8 +4,8 @@ function ReportManager() {
     return (
         <>
             <div className="manager w-75">
-                <div className="brand">
-                    <div className="brand-header d-flex justify-content-between">
+                <div className="report">
+                    <div className="report-header d-flex justify-content-between">
                         <h2 className="title">Thông kê doanh thu</h2>
                     </div>
                     <div className="report-content d-flex justify-content-between align-items-center mt-2">

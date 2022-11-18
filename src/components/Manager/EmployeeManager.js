@@ -18,7 +18,7 @@ function EmployeeManager() {
 
     return (
         <>
-            <div className="manager w-75">
+            <div className="manager">
                 <div className="employee">
                     <div className="employee-header d-flex justify-content-between">
                         <h2 className="title">Nhân viên</h2>

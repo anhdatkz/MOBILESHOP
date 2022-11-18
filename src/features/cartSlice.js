@@ -21,17 +21,36 @@ const cartSlice = createSlice({
             if (itemIndex >= 0) {
                 state.cartItems[itemIndex].cartQuantity += 1;
                 toast.info("Tăng số lượng thành công!", {
-                    position: "top-right"
+                    position: "top-center"
                 })
             } else {
                 const tempProduct = { ...action.payload, cartQuantity: 1 }
                 state.cartItems.push(tempProduct)
                 toast.success("Thêm sản phẩm vào giỏ hàng thành công!", {
-                    position: "top-right"
+                    position: "top-center"
                 })
             }
 
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
+        },
+
+        addToCartByQuantity(state, action){
+            const itemIndex = state.cartItems.findIndex(
+                (item) => item.maloai === action.payload.maloai
+            )
+
+            if (itemIndex >= 0) {
+                state.cartItems[itemIndex].cartQuantity += 1;
+                toast.info("Tăng số lượng thành công!", {
+                    position: "top-center"
+                })
+            } else {
+                const tempProduct = { ...action.payload, cartQuantity: 1 }
+                state.cartItems.push(tempProduct)
+                toast.success("Thêm sản phẩm vào giỏ hàng thành công!", {
+                    position: "top-center"
+                })
+            }
         },
 
         removeFromCart(state, action){
@@ -42,7 +61,7 @@ const cartSlice = createSlice({
             state.cartItems = nextCartItem
 
             toast.error("Xóa sản phẩm khỏi giỏ hàng thành công!", {
-                position: "top-right"
+                position: "top-center"
             })
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
@@ -56,7 +75,7 @@ const cartSlice = createSlice({
                 state.cartItems[itemIndex].cartQuantity -= 1
 
                 toast.info("Giảm số lượng thành công!", {
-                    position: "top-right"
+                    position: "top-center"
                 })
             } else if (state.cartItems[itemIndex].cartQuantity === 1){
                 const nextCartItem = state.cartItems.filter(
@@ -66,7 +85,7 @@ const cartSlice = createSlice({
                 state.cartItems = nextCartItem
     
                 toast.error("Xóa sản phẩm khỏi giỏ hàng thành công!", {
-                    position: "top-right"
+                    position: "top-center"
                 })
             }
 
@@ -103,6 +122,7 @@ const cartSlice = createSlice({
 
 export const {
     addToCart,
+    addToCartByQuantity,
     removeFromCart,
     decreaseCartItem,
     getTotals,

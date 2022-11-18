@@ -5,6 +5,7 @@ import cartEmpty from '../../assets/images/cartEmpty.png'
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { addToCart, decreaseCartItem, getTotals, removeFromCart } from "../../features/cartSlice"
+import { toast } from "react-toastify"
 
 
 function Cart(props) {
@@ -30,12 +31,14 @@ function Cart(props) {
     }
 
     const onClickCheckout = () => {
-        if (isLogin == "" || isLogin == "false") {
-            alert("Vui lòng đăng nhập trước khi đặt hàng")
-            navigate("/login")
+        if (isLogin == "true") {
+            navigate("/checkout")
         }
         else {
-            navigate("/checkout")
+            toast.error("Vui lòn đăng nhập", {
+                position: "top-center"
+            })
+            navigate("/login")
         }
         // setCheckout(false)
     }

@@ -4,7 +4,7 @@ import {FaEdit, FaTrashAlt} from "react-icons/fa"
 function OrderManager(){
     return(
         <>
-            <div className="manager w-75">
+            <div className="manager">
                 <div className="order">
                     <div className="order-header d-flex justify-content-between">
                         <h2 className="title">Danh sách đơn hàng khách hàng</h2>
@@ -27,7 +27,7 @@ function OrderManager(){
                                 <td>Nguyễn Văn An</td>
                                 <td>12/8/2022</td>
                                 <td>1998 $</td>
-                                <td>Đã duyệt</td>
+                                <td className="status">Đã duyệt</td>
                                 <td>
                                     <FaEdit/>
                                 </td>
