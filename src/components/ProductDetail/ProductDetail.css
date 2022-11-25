@@ -80,9 +80,10 @@
     line-height: 28px;
 }
 
-.section-detail__price .price{
-    font-size: 24px;
-    font-weight: bolder;
+.section-detail__price .old-price{
+    text-decoration: line-through;
+    font-size: 12px;
+    color: #545454;
 }
 
 .section-detail__price .discount{
@@ -93,9 +94,9 @@
 }
 
 .section-detail__price-discount{
-    font-size: 12px;
+    font-size: 24px;
     font-weight: bolder;
-    color: #9f9f9f;
+    color: #d70018;
     margin-bottom: 20px;
 }
 

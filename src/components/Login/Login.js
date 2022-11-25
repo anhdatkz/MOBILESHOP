@@ -50,12 +50,13 @@ function Login() {
                 })
 
                 localStorage.setItem('isLogin', true)
+                localStorage.setItem('username', data.name)
                 localStorage.setItem('role', data.authorities[0])
                 setAccounts(data)
 
-                if(data.authorities[0] === "ROLE_USER"){
+                if (data.authorities[0] === "ROLE_USER") {
                     navigate("/user/profile")
-                } else if(data.authorities[0] === "ROLE_ADMIN"){
+                } else if (data.authorities[0] === "ROLE_ADMIN") {
                     navigate("/manager")
                 }
 
@@ -69,7 +70,7 @@ function Login() {
                 console.error('Error:', error);
             });
 
-            scrollTop()
+        scrollTop()
     }
 
     // const onSubmitLogin = (e) => {
@@ -117,57 +118,59 @@ function Login() {
 
     return (
         <>
-            <form className='container p-3 login-form'>
-                <h3>Đăng nhập</h3>
-                <div className="mb-3">
-                    <label>Tên đăng nhập</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Tên đăng nhập"
-                        value={username}
-                        onChange={e => setUserName(e.target.value.trim())}
-                        required
-                    />
-                </div>
-
-                <div className="mb-3">
-                    <label>Mật khẩu</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Mật khẩu"
-                        value={password}
-                        onChange={e => setPassWord(e.target.value.trim())}
-                        required
-                    />
-                </div>
-
-                <div className="mb-3">
-                    <div className="custom-control custom-checkbox">
+            <div className="container">
+                <form className='login-form p-3'>
+                    <h3>Đăng nhập</h3>
+                    <div className="mb-3">
+                        <label>Tên đăng nhập</label>
                         <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="customCheck1"
+                            type="text"
+                            className="form-control"
+                            placeholder="Tên đăng nhập"
+                            value={username}
+                            onChange={e => setUserName(e.target.value.trim())}
+                            required
                         />
-                        <label className="custom-control-label" htmlFor="customCheck1">
-                            Remember me
-                        </label>
                     </div>
-                </div>
 
-                <div className="d-flex justify-content-between">
-                    <button type='button' className="btn btn-primary" onClick={login}>
-                        Đăng nhập
-                    </button>
-                    <button type="submit" className="btn btn-primary">
-                        <Link to="/register" className='text-white'>Đăng ký</Link>
-                    </button>
-                </div>
-                <p className="forgot-password text-right">
-                    Quên <a href="#">mật khẩu?</a>
-                </p>
-            </form>
+                    <div className="mb-3">
+                        <label>Mật khẩu</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            placeholder="Mật khẩu"
+                            value={password}
+                            onChange={e => setPassWord(e.target.value.trim())}
+                            required
+                        />
+                    </div>
+
+                    <div className="mb-3">
+                        <div className="custom-control custom-checkbox">
+                            <input
+                                type="checkbox"
+                                className="custom-control-input"
+                                id="customCheck1"
+                            />
+                            <label className="custom-control-label" htmlFor="customCheck1">
+                                Remember me
+                            </label>
+                        </div>
+                    </div>
+
+                    <div className="d-flex justify-content-between">
+                        <button type='button' className="btn btn-primary" onClick={login}>
+                            Đăng nhập
+                        </button>
+                        <button type="submit" className="btn btn-primary">
+                            <Link to="/register" className='text-white'>Đăng ký</Link>
+                        </button>
+                    </div>
+                    <p className="forgot-password text-right">
+                        Quên <a href="#">mật khẩu?</a>
+                    </p>
+                </form>
+            </div>
         </>
     )
 }

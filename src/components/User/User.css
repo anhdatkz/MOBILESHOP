@@ -1,3 +1,5 @@
+
+.order,
 .user{
     margin-top: 66px;
     margin-left: 200px;
@@ -7,7 +9,6 @@
     padding: 0 20px;
     font-size: 14px;
     width: calc(100% - 200px);
-    height: 1000px;
 }
 
 .user-title{
@@ -42,4 +43,20 @@
     margin-top: 20px;
     margin-left: 20px;
     width: 100px;
+}
+
+/* USER ORDER */
+
+
+.order-status{
+    font-weight: 500;
+    color: rgb(255, 128, 0);
+}
+
+.order-total{
+    font-weight: 700;
+}
+
+.btn-order{
+    margin-right: 20px
 }

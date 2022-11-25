@@ -9,6 +9,7 @@ function ProductsDetail() {
     const { id } = useParams()
     const [product, setProduct] = useState({})
     const [price, setPrice] = useState(0)
+    const [percent, setPercent] = useState("")
 
     const dispatch =  useDispatch()
 
@@ -22,7 +23,12 @@ function ProductsDetail() {
             .then((data) => {
                 setProduct(data)
                 console.log(data)
-                setPrice(data.thayDoiGiasLSP[0].giamoi);
+                setPrice(data.ctGiamGiaLSP[0]
+                    ? (data.thayDoiGiasLSP[0].giamoi - data.thayDoiGiasLSP[0].giamoi * data.ctGiamGiaLSP[0].phantram / 100)
+                    : data.thayDoiGiasLSP[0].giamoi);
+                setPercent(data.ctGiamGiaLSP[0]
+                    ? data.ctGiamGiaLSP[0].phantram
+                    : "")
             })
     }, [])
 
@@ -49,11 +55,11 @@ function ProductsDetail() {
                     </div>
 
                     <div className="section-detail__price">
-                        <div className="price">{price} $</div>
-                        <div className="discount"></div>
+                        <div className="old-price">{price} $</div>
+                        <div className="discount">{`${percent} %`}</div>
                     </div>
                     <div className="section-detail__price-discount">
-                        
+                        {price} $
                     </div>
                     <div className="section-detail__add-cart">
                         {/* <div className="quantity">
@@ -71,36 +77,36 @@ function ProductsDetail() {
 
             <div className="product-detail mt-5 ms-5">
                 <h4 className="detail-tille">Cấu hình Điện thoại {product.tenloai}</h4>
-                <ul class="list-group w-50 mb-5">
-                    <li class="list-group-item d-flex">
+                <ul className="list-group w-50 mb-5">
+                    <li className="list-group-item d-flex">
                         <div className='w-25'>Màn hình </div>
                         <div>{product.manhinh}</div>
                     </li>
-                    <li class="list-group-item d-flex">
+                    <li className="list-group-item d-flex">
                         <div className='w-25'>Hệ điều hành </div>
                         <div>{product.hedieuhanh}</div>
                     </li>
-                    <li class="list-group-item d-flex">
+                    <li className="list-group-item d-flex">
                         <div className='w-25'>Chip </div>
                         <div>{product.chip}</div>
                     </li>
-                    <li class="list-group-item d-flex">
+                    <li className="list-group-item d-flex">
                         <div className='w-25'>RAM </div>
                         <div>{product.ram}</div>
                     </li>
-                    <li class="list-group-item d-flex">
+                    <li className="list-group-item d-flex">
                         <div className='w-25'>Bộ nhớ trong </div>
                         <div>{product.rom}</div>
                     </li>
-                    <li class="list-group-item d-flex">
+                    <li className="list-group-item d-flex">
                         <div className='w-25'>Dung lượng Pin</div>
                         <div>{product.pin}</div>
                     </li>
-                    <li class="list-group-item d-flex">
+                    <li className="list-group-item d-flex">
                         <div className='w-25'>Số lượng </div>
                         <div>{product.soluongton}</div>
                     </li>
-                    <li class="list-group-item d-flex">
+                    <li className="list-group-item d-flex">
                         <div className='w-25'>Bảo hành</div>
                         <div>{product.thoigianbh} tháng</div>
                     </li>

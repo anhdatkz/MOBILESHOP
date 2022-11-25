@@ -19,14 +19,14 @@ function Cart(props) {
     const cartItems = cart.cartItems
 
     const handleRemoveFromCart = (cartItem) => {
-       dispatch(removeFromCart(cartItem))
+        dispatch(removeFromCart(cartItem))
     }
 
-    const handleIncreaseCartItem = (cartItem) =>{
+    const handleIncreaseCartItem = (cartItem) => {
         dispatch(addToCart(cartItem))
     }
 
-    const handleDecreaseCartItem = (cartItem) =>{
+    const handleDecreaseCartItem = (cartItem) => {
         dispatch(decreaseCartItem(cartItem))
     }
 
@@ -77,14 +77,18 @@ function Cart(props) {
                                         <tr key={index}>
                                             <td>{item.tenloai}</td>
                                             <td><img src={item.anh} alt="" className="cart-item-img" /></td>
-                                            <td>{item.thayDoiGiasLSP[0].giamoi} $</td>
+                                            <td>{item.ctGiamGiaLSP[0]
+                                                ? (item.thayDoiGiasLSP[0].giamoi - item.thayDoiGiasLSP[0].giamoi * item.ctGiamGiaLSP[0].phantram / 100)
+                                                : item.thayDoiGiasLSP[0].giamoi} $</td>
                                             <td>
                                                 <span className="btn btn-primary" style={{ margin: '2px' }} onClick={() => handleDecreaseCartItem(item)}>-</span>
                                                 <span className="btn btn-info"> {item.cartQuantity} </span>
                                                 <span className="btn btn-primary" style={{ margin: '2px' }} onClick={() => handleIncreaseCartItem(item)}>+</span>
                                             </td>
-                                            <td>{item.thayDoiGiasLSP[0].giamoi * item.cartQuantity} $</td>
-                                            <td><FaRegWindowClose onClick={() => handleRemoveFromCart(item)}/></td>
+                                            <td>{item.ctGiamGiaLSP[0]
+                                                ? (item.thayDoiGiasLSP[0].giamoi - item.thayDoiGiasLSP[0].giamoi * item.ctGiamGiaLSP[0].phantram / 100) * item.cartQuantity
+                                                : (item.thayDoiGiasLSP[0].giamoi * item.cartQuantity)} $</td>
+                                            <td><FaRegWindowClose onClick={() => handleRemoveFromCart(item)} /></td>
                                         </tr>
                                     ))
                                 }

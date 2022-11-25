@@ -95,8 +95,15 @@ const cartSlice = createSlice({
         getTotals(state, action){
             let {total, quantity} = state.cartItems.reduce(
                 (cartTotal, cartItem) => {
-                    const { thayDoiGiasLSP, cartQuantity} = cartItem
-                    const itemTotal = thayDoiGiasLSP[0].giamoi * cartQuantity
+                    const { ctGiamGiaLSP, thayDoiGiasLSP, cartQuantity} = cartItem
+                    let itemTotal = 0
+                    // const itemTotal = thayDoiGiasLSP[0].giamoi * cartQuantity
+
+                    if(ctGiamGiaLSP[0]){
+                        itemTotal = (thayDoiGiasLSP[0].giamoi - thayDoiGiasLSP[0].giamoi * ctGiamGiaLSP[0].phantram / 100) * cartQuantity
+                    } else{
+                        itemTotal = thayDoiGiasLSP[0].giamoi * cartQuantity
+                    }
 
                     cartTotal.total += itemTotal
                     cartTotal.quantity = state.cartItems.length

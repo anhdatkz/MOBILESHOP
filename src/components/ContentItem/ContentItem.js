@@ -41,8 +41,18 @@ function ContentItem(props) {
                                         <img src={loaisp.anh} />
                                     </div>
                                     <div className='product__name'>{loaisp.tenloai}</div>
-                                    <div className='product__old-price'>1200 $</div>
-                                    <div className='product__new-price'>{loaisp.thayDoiGiasLSP[0].giamoi} $</div>
+                                    <div className='product__old-price'>
+                                        <div className="old-price">
+                                            {loaisp.thayDoiGiasLSP[0].giamoi}$
+                                        </div>
+                                        <div className="percent">
+                                            {loaisp.ctGiamGiaLSP[0] ? `${loaisp.ctGiamGiaLSP[0].phantram} %` : ""}
+                                        </div>
+                                    </div>
+                                    <div className='product__new-price'>{loaisp.ctGiamGiaLSP[0]
+                                        ? (loaisp.thayDoiGiasLSP[0].giamoi - loaisp.thayDoiGiasLSP[0].giamoi * loaisp.ctGiamGiaLSP[0].phantram / 100)
+                                        : loaisp.thayDoiGiasLSP[0].giamoi} $
+                                    </div>
                                     <ul className='product__star'>
                                         <li><FaStar /></li>
                                         <li><FaStar /></li>

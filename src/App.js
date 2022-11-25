@@ -31,7 +31,7 @@ function App() {
     //window.addEventListener("scroll", handleScroll)
   }, [])
 
-  localStorage.setItem("isLogin", "")
+  
   let isLogin = localStorage.getItem("isLogin")
   console.log("isLogin : " + isLogin)
   function PrivateRoute({ children }) {

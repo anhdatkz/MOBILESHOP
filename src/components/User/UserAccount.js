@@ -1,8 +1,28 @@
+import { useEffect, useState } from 'react'
+import apiConfig from '../../api/apiConfigs'
 import './User.css'
 
 
 
 function UserAccount() {
+
+    const [userInfo, setUserInfo] = useState({})
+    const username = localStorage.getItem('username')
+
+    useEffect(()=>{
+        fetch(`${apiConfig.baseUrl}/khachhang/tk/${username}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setUserInfo(data)
+                console.log(data)
+            })
+    },[])
+
+    const handleChangeName = () =>{
+        
+    }
+    console.log(userInfo)
+
     return (
         <>
             <div className="user">
@@ -14,39 +34,39 @@ function UserAccount() {
                         <div className="frofile-item">
                             <div className="username">
                                 <label htmlFor="">Tên đăng nhập</label>
-                                <div>anhdat</div>
+                                <div>{username}</div>
                             </div>
                         </div>
                         <div className="frofile-item">
                             <div className="fullname">
                                 <label htmlFor="">Tên</label>
                                 <div>
-                                    <input type="text" value="Lê Phước Anh Đạt"/>
+                                    <input type="text" defaultValue={userInfo.tenkh} onChange={handleChangeName}/>
                                 </div>
                             </div>
                         </div>
                         <div className="frofile-item">
                             <div className="email">
                                 <label htmlFor="">Email</label>
-                                <div>nguyenvana@gmail.com</div>
+                                <div>{userInfo.email}</div>
                             </div>
                         </div>
                         <div className="frofile-item">
                             <div className="numberphone">
                                 <label htmlFor="">Số điện thoại</label>
-                                <div>0123456789</div>
+                                <div>{userInfo.sdt}</div>
                             </div>
                         </div>
                         <div className="frofile-item">
                             <div className="address">
                                 <label htmlFor="">Địa chỉ</label>
-                                <div>Hồ Chí Minh</div>
+                                <div>{userInfo.diachi}</div>
                             </div>
                         </div>
                         <div className="frofile-item">
                             <div className="dayofbirth">
                                 <label htmlFor="">Ngày sinh</label>
-                                <div>1999-12-11</div>
+                                <input type="date" value={userInfo.ngaysinh}></input>
                             </div>
                         </div>
                         <div className="frofile-item">

@@ -1,12 +1,31 @@
 import "./Paypal.css"
 import "../Cart/Cart.css"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import apiConfig from '../../api/apiConfigs'
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom"
+import { clearCart } from "../../features/cartSlice"
 
 function PayPal({ isCheckout }) {
     const paypal = useRef();
     const cart = useSelector((state) => state.cart)
     const cartItems = cart.cartItems
+    const [userInfo, setUserInfo] = useState({})
+    const username = localStorage.getItem('username')
+
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        fetch(`${apiConfig.baseUrl}/khachhang/tk/${username}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setUserInfo(data)
+                console.log(data)
+            })
+    },[])
 
     useEffect(() => {
         window.paypal
@@ -28,13 +47,21 @@ function PayPal({ isCheckout }) {
                 onApprove: async (data, actions) => {
                     const order = await actions.order.capture();
                     console.log(order);
+                    dispatch(clearCart())
+                    navigate("/")
+                    toast.success("Đặt hàng thành công!", {
+                        position: "top-center"
+                    })
                 },
                 onError: (err) => {
                     console.log(err);
+                    toast.error("Đặt hàng thất bại!", {
+                        position: "top-center"
+                    })
                 },
             })
             .render(paypal.current);
-    }, [paypal]);
+    }, [paypal, cart, dispatch]);
 
     return (
         <>
@@ -43,10 +70,10 @@ function PayPal({ isCheckout }) {
                     <div className="customer-info">
                         <div className="delivery-address">
                             <h4>Địa chỉ nhận hàng</h4>
-                            <h6 className="name">Lê Phước Anh Đạt</h6>
-                            <div className="address">A2 Hẻm 60 Đường Man Thiện, Phường Tăng Nhơn Phú A, Thành Phố Thủ Đức, TP. Hồ Chí Minh</div>
-                            <div className="phone">0123456789</div>
-                            <div className="email">nguyenvana@gmail.com</div>
+                            <h6 className="name">{userInfo.tenkh}</h6>
+                            <div className="address">{userInfo.diachi}</div>
+                            <div className="phone">{userInfo.sdt}</div>
+                            <div className="email">{userInfo.email}</div>
                         </div>
                         <div className="delivery-mode">
                             <h4>Hình thức giao hàng</h4>

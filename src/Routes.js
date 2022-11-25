@@ -29,6 +29,7 @@ const publicRoutes = [
     { path: "/user/profile", component: UserProfile },
     { path: "/user/notifications", component: UserNotifi},
     { path: "/user/orders", component: UserOrders },
+    { path: "/user/orders/:id", component: UserOrders },
     { path: "/user/orders-history", component: UserOrderHistory},
     { path: "/user/returns", component: UserReturn },
 ]
