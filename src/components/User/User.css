@@ -46,7 +46,9 @@
 }
 
 /* USER ORDER */
-
+.order th,.order td{
+    padding: 8px;
+}
 
 .order-status{
     font-weight: 500;

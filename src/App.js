@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css"
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header/Header';
+import ScrollToTop from './scrollTop/ScrollToTop';
 // import Navbar from './components/Navbar/Navbar';
 // import Footer from './components/Footer/Footer';
 
@@ -47,6 +48,7 @@ function App() {
   return (
     <>
       <Header />
+      <ScrollToTop/>
       <Routes>
         {publicRoutes.map((route, index) => {
           // const Page = route.component

@@ -3,7 +3,7 @@ import "./Manager.css"
 function ReportManager() {
     return (
         <>
-            <div className="manager w-75">
+            <div className="manager">
                 <div className="report">
                     <div className="report-header d-flex justify-content-between">
                         <h2 className="title">Thông kê doanh thu</h2>

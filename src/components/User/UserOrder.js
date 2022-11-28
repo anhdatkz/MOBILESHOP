@@ -37,10 +37,13 @@ function UserOrder() {
     return (
         <>
             <div className="col-md-12">
-                <table className="table order">
+                <table className="order">
                     <thead>
                         <tr>
-                            <th>Mã đơn hàng</th>
+                            <th>Mã ĐH</th>
+                            <th>Người nhận</th>
+                            <th>Địa chỉ</th>
+                            <th>SĐT</th>
                             <th>Ngày đặt</th>
                             <th>Tổng tiền</th>
                             <th>Trạng thái</th>
@@ -51,6 +54,9 @@ function UserOrder() {
                         {orderInfo.map((orders) => (
                             <tr key={orders.idgiohang}>
                                 <td>{orders.idgiohang}</td>
+                                <td>{orders.tennguoinhan}</td>
+                                <td>{orders.diachinhan}</td>
+                                <td>{orders.sdtnguoinhan}</td>
                                 <td>{orders.ngay}</td>
                                 <td className="order-total">{orders.tongtien} $</td>
                                 <td className="order-status">{orders.trangThai.trangthai}</td>

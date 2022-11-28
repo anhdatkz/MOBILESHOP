@@ -18,13 +18,28 @@ const cartSlice = createSlice({
                 (item) => item.maloai === action.payload.maloai
             )
 
+            let totalCart = 0;
+
             if (itemIndex >= 0) {
                 state.cartItems[itemIndex].cartQuantity += 1;
+                if(state.cartItems[itemIndex].ctGiamGiaLSP[0]){
+                    state.cartItems[itemIndex].total = (state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi - state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi * state.cartItems[itemIndex].ctGiamGiaLSP[0].phantram / 100) 
+                    * state.cartItems[itemIndex].cartQuantity
+                } else{
+                    state.cartItems[itemIndex].total = state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi * state.cartItems[itemIndex].cartQuantity
+                }
+                // state.cartItems[itemIndex].total = totalCart;
                 toast.info("Tăng số lượng thành công!", {
                     position: "top-center"
                 })
             } else {
-                const tempProduct = { ...action.payload, cartQuantity: 1 }
+                if(action.payload.ctGiamGiaLSP[0]){
+                    totalCart = (action.payload.thayDoiGiasLSP[0].giamoi - action.payload.thayDoiGiasLSP[0].giamoi * action.payload.ctGiamGiaLSP[0].phantram / 100) 
+                } else{
+                    totalCart = action.payload.thayDoiGiasLSP[0].giamoi
+                }
+
+                const tempProduct = { ...action.payload, cartQuantity: 1, total: totalCart }
                 state.cartItems.push(tempProduct)
                 toast.success("Thêm sản phẩm vào giỏ hàng thành công!", {
                     position: "top-center"
@@ -67,12 +82,21 @@ const cartSlice = createSlice({
         },
 
         decreaseCartItem(state, action){
+            let totalCart = 0;
+
             const itemIndex = state.cartItems.findIndex(
                 cartItem => cartItem.maloai === action.payload.maloai
             )
 
             if(state.cartItems[itemIndex].cartQuantity > 1){
                 state.cartItems[itemIndex].cartQuantity -= 1
+
+                if(state.cartItems[itemIndex].ctGiamGiaLSP[0]){
+                    state.cartItems[itemIndex].total = (state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi - state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi * state.cartItems[itemIndex].ctGiamGiaLSP[0].phantram / 100) 
+                    * state.cartItems[itemIndex].cartQuantity
+                } else{
+                    state.cartItems[itemIndex].total = state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi * state.cartItems[itemIndex].cartQuantity
+                }
 
                 toast.info("Giảm số lượng thành công!", {
                     position: "top-center"

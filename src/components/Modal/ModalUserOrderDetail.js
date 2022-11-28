@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import apiConfigs from '../../api/apiConfigs'
-import "./Modal.css"
+import style from "./Modal.module.css"
 
 function ModalBrand(props) {
     const { hide, idgiohang } = props

@@ -18,14 +18,80 @@ function PayPal({ isCheckout }) {
 
     const dispatch = useDispatch()
 
-    useEffect(()=>{
+    let cartData = {}
+    let resultCart = {}
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    today = dd + '-' + mm + '-' + yyyy;
+
+    useEffect(() => {
         fetch(`${apiConfig.baseUrl}/khachhang/tk/${username}`)
             .then((res) => res.json())
             .then((data) => {
                 setUserInfo(data)
-                console.log(data)
+                cartData = {
+                    ngay: today,
+                    tennguoinhan: data.tenkh,
+                    diachinhan: data.diachi,
+                    sdtnguoinhan: data.sdt,
+                    tongtien: cart.cartTotalAmount,
+                    trangThai: {
+                        matrangthai: 1,
+                    },
+                    khachHang: {
+                        cmnd: data.cmnd
+                    }
+                }
             })
-    },[])
+    }, [])
+
+    const handleSaveCart = async () => {
+
+        let response = await fetch(`${apiConfig.baseUrl}/giohang`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cartData),
+        })
+
+        let idGioHang = await response.json()
+        console.log('ĐÃ CHẠY TỚI ĐÂY');
+        console.log('Giỏ hàng:', idGioHang);
+        cartItems.forEach((cartItem) => {
+            let cartDetailData = {
+                id: {
+                    idgiohangctgh: idGioHang,
+                    maloaictgh: cartItem.maloai
+                },
+                soluong: cartItem.cartQuantity,
+                tong: cartItem.total
+            }
+
+            fetch(`${apiConfig.baseUrl}/ctgh`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cartDetailData),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw Error(response.status)
+                })
+                .then((data) => {
+                    console.log('CTGH:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+
+    }
 
     useEffect(() => {
         window.paypal
@@ -45,6 +111,7 @@ function PayPal({ isCheckout }) {
                     });
                 },
                 onApprove: async (data, actions) => {
+                    handleSaveCart()
                     const order = await actions.order.capture();
                     console.log(order);
                     dispatch(clearCart())
@@ -82,7 +149,7 @@ function PayPal({ isCheckout }) {
                         </div>
                         <div className="delivery-mode">
                             <h4>Hình thức thanh toán</h4>
-                            <div>Thanh toán tiền mặt khi nhận hàng</div>
+                            <div>Thanh toán qua Paypal</div>
                         </div>
                     </div>
                 </div>
