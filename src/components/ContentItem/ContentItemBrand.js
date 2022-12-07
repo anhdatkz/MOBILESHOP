@@ -4,6 +4,7 @@ import { FaStar } from 'react-icons/fa'
 import "./ContentItem.css"
 import { Link } from 'react-router-dom'
 import { useParams } from "react-router-dom"
+import { caculate, formatTien } from '../../ultils/Format'
 
 function ContentItemBrand(props) {
     const { id } = useParams()
@@ -12,7 +13,7 @@ function ContentItemBrand(props) {
     const [cartItems, setCartItems] = useState([])
 
     useEffect(() => {
-        fetch(`${apiConfig.baseUrl}/loaisanpham/search/query=${id}`)
+        fetch(`${apiConfig.baseUrl}/loaisanpham/hang=${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setLoaiSP(data)
@@ -52,15 +53,15 @@ function ContentItemBrand(props) {
                                     <div className='product__name'>{loaisp.tenloai}</div>
                                     <div className='product__old-price'>
                                         <div className="old-price">
-                                            {loaisp.thayDoiGiasLSP[0].giamoi}$
+                                            {formatTien(loaisp.thayDoiGiasLSP[0].giamoi, '$')}
                                         </div>
                                         <div className="percent">
                                             {loaisp.ctGiamGiaLSP[0] ? `${loaisp.ctGiamGiaLSP[0].phantram} %` : ""}
                                         </div>
                                     </div>
                                     <div className='product__new-price'>{loaisp.ctGiamGiaLSP[0]
-                                        ? (loaisp.thayDoiGiasLSP[0].giamoi - loaisp.thayDoiGiasLSP[0].giamoi * loaisp.ctGiamGiaLSP[0].phantram / 100)
-                                        : loaisp.thayDoiGiasLSP[0].giamoi} $
+                                        ? formatTien(caculate(loaisp),'$')
+                                        : formatTien(loaisp.thayDoiGiasLSP[0].giamoi, '$')}
                                     </div>
                                     <ul className='product__star'>
                                         <li><FaStar /></li>

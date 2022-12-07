@@ -5,6 +5,7 @@ import { FaPlus, FaMinus } from "react-icons/fa"
 import { useState, useEffect } from "react"
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../../features/cartSlice'
+import { caculate, formatTien } from '../../ultils/Format'
 function ProductsDetail() {
     const { id } = useParams()
     const [product, setProduct] = useState({})
@@ -24,7 +25,7 @@ function ProductsDetail() {
                 setProduct(data)
                 console.log(data)
                 setPrice(data.ctGiamGiaLSP[0]
-                    ? (data.thayDoiGiasLSP[0].giamoi - data.thayDoiGiasLSP[0].giamoi * data.ctGiamGiaLSP[0].phantram / 100)
+                    ? caculate(data)
                     : data.thayDoiGiasLSP[0].giamoi);
                 setPercent(data.ctGiamGiaLSP[0]
                     ? data.ctGiamGiaLSP[0].phantram
@@ -55,11 +56,11 @@ function ProductsDetail() {
                     </div>
 
                     <div className="section-detail__price">
-                        <div className="old-price">{price} $</div>
+                        <div className="old-price">{formatTien(price,'$')}</div>
                         <div className="discount">{`${percent} %`}</div>
                     </div>
                     <div className="section-detail__price-discount">
-                        {price} $
+                        {formatTien(price,'$')}
                     </div>
                     <div className="section-detail__add-cart">
                         {/* <div className="quantity">

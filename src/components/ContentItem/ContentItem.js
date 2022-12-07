@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { scrollTop } from '../../App';
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../../features/cartSlice'
+import { formatTien, caculate } from '../../ultils/Format'
 
 function ContentItem(props) {
     const { title } = props
@@ -43,15 +44,15 @@ function ContentItem(props) {
                                     <div className='product__name'>{loaisp.tenloai}</div>
                                     <div className='product__old-price'>
                                         <div className="old-price">
-                                            {loaisp.thayDoiGiasLSP[0].giamoi}$
+                                            {formatTien(loaisp.thayDoiGiasLSP[0].giamoi, '$')}
                                         </div>
                                         <div className="percent">
                                             {loaisp.ctGiamGiaLSP[0] ? `${loaisp.ctGiamGiaLSP[0].phantram} %` : ""}
                                         </div>
                                     </div>
                                     <div className='product__new-price'>{loaisp.ctGiamGiaLSP[0]
-                                        ? (loaisp.thayDoiGiasLSP[0].giamoi - loaisp.thayDoiGiasLSP[0].giamoi * loaisp.ctGiamGiaLSP[0].phantram / 100)
-                                        : loaisp.thayDoiGiasLSP[0].giamoi} $
+                                        ? formatTien(caculate(loaisp),'$')
+                                        : formatTien(loaisp.thayDoiGiasLSP[0].giamoi, '$')}
                                     </div>
                                     <ul className='product__star'>
                                         <li><FaStar /></li>

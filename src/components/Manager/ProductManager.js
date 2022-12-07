@@ -1,14 +1,17 @@
-import "./Manager.css"
-import { FaEdit, FaTrashAlt, FaList } from "react-icons/fa"
-import { useState, useEffect, Fragment } from 'react'
+import style from "./Manager.module.css"
+import { FaEdit, FaTrashAlt, FaList, FaSearch } from "react-icons/fa"
+import { useState, useEffect, Fragment, useRef } from 'react'
 import apiConfig from '../../api/apiConfigs'
 import ModalProduct from "../Modal/ModalProduct"
+import { caculate, formatTien } from "../../ultils/Format"
 
 function ProductManager() {
     const [lsp, setlsp] = useState([])
     const [modal, setModal] = useState(false)
     const [action, setAction] = useState("")
     const [maLSP, setMaLSP] = useState("")
+
+    const searchRef = useRef()
 
     const showModalEdit = (mahang) => {
         console.warn(mahang)
@@ -36,13 +39,34 @@ function ProductManager() {
             })
     }, [])
 
+    const handleFilterProduct = (e) => {
+        let productsFilter = []
+        lsp.forEach((product) => {
+            const tenloai = product.tenloai.toLowerCase()
+            if (tenloai.includes(searchRef.current.value.toLowerCase())) {
+                productsFilter.push(product)
+            }
+        })
+
+        console.log(productsFilter)
+        setlsp(productsFilter)
+        searchRef.current.value = ""
+    }
 
     return (
         <>
-            <div className="manager">
+            <div className={style["manager"]}>
                 <div className="product-manager">
                     <div className="product-header d-flex justify-content-between">
                         <h2 className="title">Loại sản phẩm</h2>
+                        <div className={style['search']}>
+                            <div className={style['search-box']}>
+                                <div className={style['search-icon']} onClick={() => handleFilterProduct()}>
+                                    <FaSearch></FaSearch>
+                                </div>
+                                <input className={style['search-input']} ref={searchRef} placeholder='Tìm kiếm sản phẩm...' />
+                            </div>
+                        </div>
                         <button className="btn btn-primary" onClick={() => showModalAdd()}>Thêm</button>
                     </div>
                     <table className="table">
@@ -62,16 +86,16 @@ function ProductManager() {
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{lsp.maloai}</td>
-                                    <td><img className="product-img-manager" src={lsp.anh} alt="" /></td>
+                                    <td><img className={style["product-img-manager"]} src={lsp.anh} alt="" /></td>
                                     <td>{lsp.tenloai}</td>
                                     <td>{lsp.soluongton}</td>
                                     <td>{lsp.ctGiamGiaLSP[0]
-                                        ? (lsp.thayDoiGiasLSP[0].giamoi - lsp.thayDoiGiasLSP[0].giamoi * lsp.ctGiamGiaLSP[0].phantram / 100)
-                                        : lsp.thayDoiGiasLSP[0].giamoi} $</td>
+                                        ? formatTien(caculate(lsp), '$')
+                                        : formatTien(lsp.thayDoiGiasLSP[0].giamoi, '$')} </td>
                                     <td className="d-flex justify-content-between">
-                                        <div className="edit"><FaEdit/></div>
-                                        <div className="delete"><FaTrashAlt /></div>
-                                        <div className="detail-list"><FaList/></div>
+                                        <div className={style["edit"]}><FaEdit /></div>
+                                        <div className={style["delete"]}><FaTrashAlt /></div>
+                                        <div className={style["detail-list"]}><FaList /></div>
                                     </td>
                                 </tr>
                             ))}
@@ -79,7 +103,7 @@ function ProductManager() {
                     </table>
                 </div>
             </div>
-            {modal === true ? <ModalProduct hide={closeModal} maLSP={maLSP} action={action}/> : <Fragment/>}
+            {modal === true ? <ModalProduct hide={closeModal} maLSP={maLSP} action={action} /> : <Fragment />}
         </>
     )
 }

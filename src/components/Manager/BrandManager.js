@@ -1,4 +1,4 @@
-import "./Manager.css"
+import style from "./Manager.module.css"
 import { FaEdit, FaTrashAlt } from "react-icons/fa"
 import { useState, useEffect, Fragment, useCallback } from 'react'
 import apiConfigs from "../../api/apiConfigs"
@@ -81,7 +81,7 @@ function BrandManager() {
 
     return (
         <>
-            <div className="manager">
+            <div className={style["manager"]}>
                 <div className="brand">
                     <div className="brand-header d-flex justify-content-between">
                         <h2 className="title">Hãng</h2>
@@ -90,6 +90,7 @@ function BrandManager() {
                     <table className="table">
                         <thead>
                             <tr>
+                                <th>STT</th>
                                 <th>Mã hãng</th>
                                 <th>Tên hãng</th>
                                 <th></th>
@@ -98,11 +99,12 @@ function BrandManager() {
                         <tbody>
                             {hangs.map((hang, index) => (
                                 <tr key={index}>
+                                    <td>{index + 1}</td>
                                     <td>{hang.mahang}</td>
                                     <td>{hang.tenhang}</td>
                                     <td className="d-flex">
-                                        <div className="action edit" onClick={() => showModalEdit(hang.mahang)}><FaEdit /></div>
-                                        <div className="action delete" onClick={() => handleDelete(hang.mahang)}><FaTrashAlt /></div>
+                                        <div className={`${style["action"]} ${style["edit"]}`} onClick={() => showModalEdit(hang.mahang)}><FaEdit /></div>
+                                        <div className={`${style["action"]} ${style["delete"]}`} onClick={() => handleDelete(hang.mahang)}><FaTrashAlt /></div>
                                     </td>
                                 </tr>
                             ))}

@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
+import style from './Modal.module.css'
 import { toast } from 'react-toastify'
 import apiConfigs from '../../api/apiConfigs'
+import { useFormik } from 'formik';
+import * as Yup from "yup"
 
 function ModalBrand(props) {
     const { hide, mahang, action } = props
@@ -22,6 +25,22 @@ function ModalBrand(props) {
         display: 'block',
         backgroundColor: 'rgba(0, 0, 0, 0.8)'
     }
+
+    const formik = useFormik({
+        initialValues: {
+            mahang: "",
+            tenhang: ""
+        },
+        validationSchema: Yup.object({
+            mahang: Yup.string()
+                .required("Mã hãng không được rỗng!"),
+            tenhang: Yup.string()
+                .required("Tên hãng không được rỗng!"),
+        }),
+        onSubmit: (values) => {
+
+        }
+    })
 
 
 
@@ -90,12 +109,11 @@ function ModalBrand(props) {
         //console.log(formData)
     }
 
-    const handleEdit= () => {
+    const handleEdit = () => {
         // let mahang = document.querySelector('input[name="mahang"').value
         // let tenhang = document.querySelector('input[name="tenhang"').value
 
         let formData = {
-            mahang: maHangRef.current.value.trim(),
             tenhang: tenHangRef.current.value.trim()
         }
         handleEditBrand(formData, mahang)
@@ -114,13 +132,21 @@ function ModalBrand(props) {
                                 <div className="mb-3">
                                     <label>Mã hãng</label>
                                     <input ref={maHangRef} type="text" className="form-control" placeholder="Mã hãng"
-                                        name='mahang' required={true}/>
+                                        name='mahang' onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur} />
+                                    {formik.touched.mahang && formik.errors.mahang ? (
+                                        <div className={style["validate"]}>{formik.errors.mahang}</div>
+                                    ) : null}
                                 </div>
 
                                 <div className="mb-3">
                                     <label>Tên hãng</label>
                                     <input ref={tenHangRef} type="text" className="form-control" placeholder="Tên hãng"
-                                        name='tenhang' required={true} />
+                                        name='tenhang' onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur} />
+                                    {formik.touched.tenhang && formik.errors.tenhang ? (
+                                        <div className={style["validate"]}>{formik.errors.tenhang}</div>
+                                    ) : null}
                                 </div>
                             </div>
                             <div className="modal-footer">
@@ -141,13 +167,14 @@ function ModalBrand(props) {
                                 <div className="mb-3">
                                     <label>Mã hãng</label>
                                     <input ref={maHangRef} type="text" className="form-control" placeholder="Mã hãng"
-                                        name='mahang' defaultValue={hang.mahang} readOnly/>
+                                        name='mahang' defaultValue={hang.mahang} readOnly />
                                 </div>
 
                                 <div className="mb-3">
                                     <label>Tên hãng</label>
                                     <input ref={tenHangRef} type="text" className="form-control" placeholder="Tên hãng"
-                                        name='tenhang' defaultValue={hang.tenhang} />
+                                        name='tenhang' defaultValue={hang.tenhang} onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur} />
                                 </div>
                             </div>
                             <div className="modal-footer">

@@ -7,6 +7,7 @@ function Sidebar() {
 
     const handleLogOut = () => {
         localStorage.setItem('isLogin', false)
+        localStorage.setItem('username', "")
         localStorage.setItem('role', "")
         navigate("/login")
     }

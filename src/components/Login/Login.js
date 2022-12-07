@@ -1,148 +1,173 @@
-import './Login.css'
+import style from './Login.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { scrollTop } from '../../App'
 import { toast } from "react-toastify"
 import apiConfigs from '../../api/apiConfigs'
+import { useFormik } from 'formik';
+import * as Yup from "yup"
 
 
 function Login() {
     const [username, setUserName] = useState("")
     const [password, setPassWord] = useState("")
     const [accounts, setAccounts] = useState([])
-    const [role, setRole] = useState("")
 
     let navigate = useNavigate()
 
-    // useEffect(() => {
-    //     fetch(`${apiConfigs.baseUrl}/taikhoan`)
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             setAccounts(data)
-    //         })
-    // }, [])
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: ""
+        },
+        validationSchema: Yup.object({
+            username: Yup.string()
+                .max(20, "Tên đăng nhập phải có ít hơn 20 ký tự")
+                .required("Tên đăng nhập không được rỗng!"),
+            password: Yup.string()
+                .max(20, "Mật khẩu phải có ít hơn 20 ký tự")
+                .required("Mật khẩu không được rỗng!"),
+        }),
+        onSubmit: (values) => {
+            localStorage.setItem('isLogin', false)
+            const formData = {
+                matk: values.username.trim(),
+                password: values.password.trim()
+            }
 
-    console.log(accounts)
+            fetch(`${apiConfigs.baseUrl}/auth`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw Error(response.status)
+                })
+                .then((data) => {
+                    toast.success("Đăng nhập thành công", {
+                        position: "top-center"
+                    })
 
-    const login = () => {
-        localStorage.setItem('isLogin', false)
-        const formData = {
-            matk: username,
-            password: password
+                    localStorage.setItem('isLogin', true)
+                    localStorage.setItem('username', data.name)
+                    localStorage.setItem('role', data.authorities[0])
+                    setAccounts(data)
+
+                    if (data.authorities[0] === "ROLE_USER") {
+                        navigate("/user/profile")
+                    } else if (data.authorities[0] === "ROLE_ADMIN") {
+                        navigate("/manager/brand")
+                    }
+
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    toast.error("Tên đăng nhập hoặc mật khẩu không đúng", {
+                        position: "top-center"
+                    })
+                    // loadData()
+                    console.error('Error:', error);
+                });
+
+            scrollTop()
         }
+    })
 
-        fetch(`${apiConfigs.baseUrl}/auth`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json()
-                }
-                throw Error(response.status)
-            })
-            .then((data) => {
-                toast.success("Đăng nhập thành công", {
-                    position: "top-center"
-                })
+    console.log(formik)
 
-                localStorage.setItem('isLogin', true)
-                localStorage.setItem('username', data.name)
-                localStorage.setItem('role', data.authorities[0])
-                setAccounts(data)
-
-                if (data.authorities[0] === "ROLE_USER") {
-                    navigate("/user/profile")
-                } else if (data.authorities[0] === "ROLE_ADMIN") {
-                    navigate("/manager")
-                }
-
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                toast.error("Tên đăng nhập hoặc mật khẩu không đúng", {
-                    position: "top-center"
-                })
-                // loadData()
-                console.error('Error:', error);
-            });
-
-        scrollTop()
-    }
-
-    // const onSubmitLogin = (e) => {
+    // const login = () => {
+    //     localStorage.setItem('isLogin', false)
     //     const formData = {
     //         matk: username,
     //         password: password
     //     }
-    //     login(formData)
 
-    //     scrollTop()
-    // }
-
-
-    // const onSubmitLogin = (e) => {
-    //     e.preventDefault()
-    //     localStorage.setItem('isLogin', false)
-    //     let acc = accounts.find(a => a.matk.trim() === username && a.password.trim() === password)
-    //     console.log("acc: " + acc)
-    //     if (acc === undefined) {
-    //         toast.error("Tên đăng nhập hoặc mật khẩu không đúng", {
-    //             position: "top-center"
+    //     fetch(`${apiConfigs.baseUrl}/auth`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(formData),
+    //     })
+    //         .then((response) => {
+    //             if (response.ok) {
+    //                 return response.json()
+    //             }
+    //             throw Error(response.status)
     //         })
-    //         return
-    //     }
-    //     else {
-    //         localStorage.setItem('isLogin', true)
-    //         setRole(acc.quyen.maquyen.trim())
-    //         if (acc.quyen.maquyen.trim() === "NV") {
-    //             navigate("/manager")
+    //         .then((data) => {
     //             toast.success("Đăng nhập thành công", {
     //                 position: "top-center"
     //             })
-    //         }
-    //         else if (acc.quyen.maquyen.trim() === "KH") {
-    //             navigate("/user/profile")
-    //             toast.success("Đăng nhập thành công", {
+
+    //             localStorage.setItem('isLogin', true)
+    //             localStorage.setItem('username', data.name)
+    //             localStorage.setItem('role', data.authorities[0])
+    //             setAccounts(data)
+
+    //             if (data.authorities[0] === "ROLE_USER") {
+    //                 navigate("/user/profile")
+    //             } else if (data.authorities[0] === "ROLE_ADMIN") {
+    //                 navigate("/manager/brand")
+    //             }
+
+    //             console.log('Success:', data);
+    //         })
+    //         .catch((error) => {
+    //             toast.error("Tên đăng nhập hoặc mật khẩu không đúng", {
     //                 position: "top-center"
     //             })
-    //         }
-    //     }
-    //     console.log(localStorage.getItem("isLogin"))
+    //             // loadData()
+    //             console.error('Error:', error);
+    //         });
+
     //     scrollTop()
     // }
-
 
     return (
         <>
-            <div className="container">
-                <form className='login-form p-3'>
+            <div className={style["container"]}>
+                <form className={`${style["login-form"]} p-3`} onSubmit={formik.handleSubmit} autoComplete="off">
                     <h3>Đăng nhập</h3>
                     <div className="mb-3">
                         <label>Tên đăng nhập</label>
                         <input
                             type="text"
+                            id='username'
+                            name='username'
                             className="form-control"
                             placeholder="Tên đăng nhập"
-                            value={username}
-                            onChange={e => setUserName(e.target.value.trim())}
-                            required
+                            value={formik.values.username}
+                            // onChange={e => setUserName(e.target.value.trim())}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                         />
+                        {formik.touched.username && formik.errors.username ? (
+                            <div className={style["validate"]}>{formik.errors.username}</div>
+                        ) : null}
                     </div>
 
                     <div className="mb-3">
                         <label>Mật khẩu</label>
                         <input
                             type="password"
+                            id='password'
+                            name='password'
                             className="form-control"
                             placeholder="Mật khẩu"
-                            value={password}
-                            onChange={e => setPassWord(e.target.value.trim())}
-                            required
+                            value={formik.values.password}
+                            // onChange={e => setPassWord(e.target.value.trim())}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                         />
+                        {formik.touched.password && formik.errors.password ? (
+                            <div className={style["validate"]}>{formik.errors.password}</div>
+                        ) : null}
                     </div>
 
                     <div className="mb-3">
@@ -159,12 +184,12 @@ function Login() {
                     </div>
 
                     <div className="d-flex justify-content-between">
-                        <button type='button' className="btn btn-primary" onClick={login}>
+                        <button type="submit" className="btn btn-primary">
                             Đăng nhập
                         </button>
-                        <button type="submit" className="btn btn-primary">
+                        <div className="btn btn-primary">
                             <Link to="/register" className='text-white'>Đăng ký</Link>
-                        </button>
+                        </div>
                     </div>
                     <p className="forgot-password text-right">
                         Quên <a href="#">mật khẩu?</a>

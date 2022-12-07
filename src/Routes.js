@@ -26,15 +26,9 @@ const publicRoutes = [
     { path: "/checkout", component: PayPal },
     { path: "/login", component: Login },
     { path: "/register", component: Register },
-    { path: "/user/profile", component: UserProfile },
-    { path: "/user/notifications", component: UserNotifi},
-    { path: "/user/orders", component: UserOrders },
-    { path: "/user/orders/:id", component: UserOrders },
-    { path: "/user/orders-history", component: UserOrderHistory},
-    { path: "/user/returns", component: UserReturn },
 ]
 
-const privateRoutes = [
+const privateRoutesAdmin = [
     { path: "/manager", component: Admin },
     { path: "/manager/brand", component: Admin },
     { path: "/manager/product", component: AdminProduct },
@@ -44,4 +38,13 @@ const privateRoutes = [
     { path: "/manager/account", component: AdminReport },
 ]
 
-export { publicRoutes, privateRoutes }
+const privateRoutesUser = [
+    { path: "/user/profile", component: UserProfile },
+    { path: "/user/notifications", component: UserNotifi},
+    { path: "/user/orders", component: UserOrders },
+    { path: "/user/orders/:id", component: UserOrders },
+    { path: "/user/orders-history", component: UserOrderHistory},
+    { path: "/user/returns", component: UserReturn },
+]
+
+export { publicRoutes, privateRoutesAdmin, privateRoutesUser }

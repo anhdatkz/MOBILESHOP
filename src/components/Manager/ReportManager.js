@@ -1,9 +1,9 @@
-import "./Manager.css"
+import style from "./Manager.module.css"
 
 function ReportManager() {
     return (
         <>
-            <div className="manager">
+            <div className={style["manager"]}>
                 <div className="report">
                     <div className="report-header d-flex justify-content-between">
                         <h2 className="title">Thông kê doanh thu</h2>

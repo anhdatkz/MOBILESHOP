@@ -6,6 +6,7 @@ import apiConfig from '../../api/apiConfigs'
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import { clearCart } from "../../features/cartSlice"
+import { caculate } from "../../ultils/Format"
 
 function PayPal({ isCheckout }) {
     const paypal = useRef();
@@ -78,10 +79,9 @@ function PayPal({ isCheckout }) {
                 body: JSON.stringify(cartDetailData),
             })
                 .then((response) => {
-                    if (response.ok) {
+                    if (response) {
                         return response.json()
                     }
-                    throw Error(response.status)
                 })
                 .then((data) => {
                     console.log('CTGH:', data);
@@ -173,11 +173,11 @@ function PayPal({ isCheckout }) {
                                         <tr key={index}>
                                             <td>{item.tenloai}</td>
                                             <td><img src={item.anh} alt="" className="cart-item-img" /></td>
-                                            <td>{item.thayDoiGiasLSP[0].giamoi} $</td>
+                                            <td>{caculate(item,"$")}</td>
                                             <td>
                                                 <span className="btn btn-info"> {item.cartQuantity} </span>
                                             </td>
-                                            <td>{item.thayDoiGiasLSP[0].giamoi * item.cartQuantity} $</td>
+                                            <td>{item.total} $</td>
                                         </tr>
                                     ))
                                 }

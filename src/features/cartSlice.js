@@ -22,16 +22,24 @@ const cartSlice = createSlice({
 
             if (itemIndex >= 0) {
                 state.cartItems[itemIndex].cartQuantity += 1;
-                if(state.cartItems[itemIndex].ctGiamGiaLSP[0]){
-                    state.cartItems[itemIndex].total = (state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi - state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi * state.cartItems[itemIndex].ctGiamGiaLSP[0].phantram / 100) 
-                    * state.cartItems[itemIndex].cartQuantity
-                } else{
-                    state.cartItems[itemIndex].total = state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi * state.cartItems[itemIndex].cartQuantity
+                if(state.cartItems[itemIndex].cartQuantity > action.payload.soluongton){
+                    state.cartItems[itemIndex].cartQuantity -= 1;
+                    toast.error("Không thể đặt quá số lượng sản phẩm hiện có!", {
+                        position: "top-center"
+                    })
+
+                } else {
+                    if(state.cartItems[itemIndex].ctGiamGiaLSP[0]){
+                        state.cartItems[itemIndex].total = (state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi - state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi * state.cartItems[itemIndex].ctGiamGiaLSP[0].phantram / 100) 
+                        * state.cartItems[itemIndex].cartQuantity
+                    } else{
+                        state.cartItems[itemIndex].total = state.cartItems[itemIndex].thayDoiGiasLSP[0].giamoi * state.cartItems[itemIndex].cartQuantity
+                    }
+                    // state.cartItems[itemIndex].total = totalCart;
+                    toast.info("Tăng số lượng thành công!", {
+                        position: "top-center"
+                    })
                 }
-                // state.cartItems[itemIndex].total = totalCart;
-                toast.info("Tăng số lượng thành công!", {
-                    position: "top-center"
-                })
             } else {
                 if(action.payload.ctGiamGiaLSP[0]){
                     totalCart = (action.payload.thayDoiGiasLSP[0].giamoi - action.payload.thayDoiGiasLSP[0].giamoi * action.payload.ctGiamGiaLSP[0].phantram / 100) 

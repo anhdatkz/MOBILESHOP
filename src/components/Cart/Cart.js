@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { addToCart, decreaseCartItem, getTotals, removeFromCart } from "../../features/cartSlice"
 import { toast } from "react-toastify"
+import { caculate, formatTien } from "../../ultils/Format"
 
 
 function Cart(props) {
@@ -63,6 +64,7 @@ function Cart(props) {
                         <table className="table">
                             <thead>
                                 <tr>
+                                    <th>STT</th>
                                     <th>Tên</th>
                                     <th>Ảnh</th>
                                     <th>Giá</th>
@@ -75,19 +77,20 @@ function Cart(props) {
                                 {
                                     cartItems.map((item, index) => (
                                         <tr key={index}>
+                                            <td>{index + 1}</td>
                                             <td>{item.tenloai}</td>
                                             <td><img src={item.anh} alt="" className="cart-item-img" /></td>
                                             <td>{item.ctGiamGiaLSP[0]
                                                 ? (item.thayDoiGiasLSP[0].giamoi - item.thayDoiGiasLSP[0].giamoi * item.ctGiamGiaLSP[0].phantram / 100)
-                                                : item.thayDoiGiasLSP[0].giamoi} $</td>
+                                                : formatTien(item.thayDoiGiasLSP[0].giamoi, '$')}</td>
                                             <td>
                                                 <span className="btn btn-primary" style={{ margin: '2px' }} onClick={() => handleDecreaseCartItem(item)}>-</span>
                                                 <span className="btn btn-info"> {item.cartQuantity} </span>
                                                 <span className="btn btn-primary" style={{ margin: '2px' }} onClick={() => handleIncreaseCartItem(item)}>+</span>
                                             </td>
                                             <td>{item.ctGiamGiaLSP[0]
-                                                ? (item.thayDoiGiasLSP[0].giamoi - item.thayDoiGiasLSP[0].giamoi * item.ctGiamGiaLSP[0].phantram / 100) * item.cartQuantity
-                                                : (item.thayDoiGiasLSP[0].giamoi * item.cartQuantity)} $</td>
+                                                ? formatTien(caculate(item) * item.cartQuantity, '$')
+                                                : formatTien(item.thayDoiGiasLSP[0].giamoi * item.cartQuantity, '$')}</td>
                                             <td><FaRegWindowClose onClick={() => handleRemoveFromCart(item)} /></td>
                                         </tr>
                                     ))
@@ -97,7 +100,7 @@ function Cart(props) {
                                     <td></td>
                                     <td></td>
                                     <td className="fw-bold">Tổng thanh toán</td>
-                                    <td className="fw-bold"> {cart.cartTotalAmount} $</td>
+                                    <td className="fw-bold"> {formatTien(cart.cartTotalAmount,'$')}</td>
                                 </tr>
                             </tbody>
                         </table>
