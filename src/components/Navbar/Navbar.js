@@ -35,9 +35,9 @@ function Navbar(){
                 <li className='nav-item'>
                     <a>Khác <FaAngleDown></FaAngleDown></a>
                     <ul className='subnav'>
-                        <li className='subnav-item'><a href=''>Hướng dẫn thanh toán</a></li>
-                        <li className='subnav-item'><a href=''>Chính sách bảo hành</a></li>
-                        <li className='subnav-item'><a href=''>Chính sách vận chuyển</a></li>
+                        <li className='subnav-item'><Link to={"/"}>Hướng dẫn thanh toán</Link></li>
+                        <li className='subnav-item'><Link to={"/"}>Chính sách bảo hành</Link></li>
+                        <li className='subnav-item'><Link to={"/"}>Chính sách vận chuyển</Link></li>
                     </ul>
                 </li>
             </ul>

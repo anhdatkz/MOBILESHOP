@@ -27,7 +27,7 @@ function UserAccount() {
         <>
             <div className="user">
                 <div className="user-title">
-                    <h3>Hồ sơ của tôi</h3>
+                    <h2>Hồ sơ của tôi</h2>
                 </div>
                 <div className="user-profile">
                     <form action="">

@@ -4,9 +4,13 @@ import logo from '../../assets/images/logo.jpg'
 import { FaShoppingCart, FaBell, FaUserCog, FaSearch } from "react-icons/fa"
 import { scrollTop } from '../../App'
 import { useSelector } from 'react-redux'
+import { useState } from 'react'
 
 
 function Header(){
+    const [query, setQuery] = useState('')
+
+
     const cart = useSelector((state) => state.cart)
     let navigate = useNavigate()
 
@@ -20,6 +24,21 @@ function Header(){
             navigate("/login")
         }
     }
+
+
+    const onSubmitSearch = (e) => {
+        e.preventDefault()
+        if(query.trim() === "") return;
+
+        navigate(`/search=${query}`)
+        setQuery("")
+        scrollTop()
+    }
+
+    const onChangeQuery = (e) => {
+        setQuery(e.target.value)
+    }
+
     return(
        <>
         <header id="header">
@@ -30,12 +49,13 @@ function Header(){
                 <Link to="/" onClick={scrollTop}>AD Store</Link>
             </div>
             <div className='header__search'>
-                <div className='header__search-box'>
+                <form className='header__search-box' onSubmit={onSubmitSearch}>
                     <div className='search-icon'>
                         <FaSearch></FaSearch>
                     </div>
-                    <input className='search-input' placeholder='Tìm kiếm sản phẩm...'/>
-                </div>
+                    <input className='search-input' onChange={onChangeQuery}
+                        value={query} placeholder='Tìm kiếm sản phẩm...'/>
+                </form>
             </div>
             <div className='header__account'>
                 <div className="header__cart">

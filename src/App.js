@@ -21,7 +21,10 @@ const scrollTop = () => {
   });
 };
 
-export { scrollTop }
+const username = localStorage.getItem('username')
+
+export { scrollTop, username }
+
 
 function App() {
   const [showGoToTop, setShowGoToTop] = useState(false)
@@ -35,7 +38,6 @@ function App() {
     }
     //window.addEventListener("scroll", handleScroll)
   }, [])
-
 
   return (
     <>

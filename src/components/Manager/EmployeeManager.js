@@ -1,5 +1,5 @@
 import style from "./Manager.module.css"
-import { FaEdit, FaTrashAlt } from "react-icons/fa"
+import { FaEdit, FaList, FaTrashAlt } from "react-icons/fa"
 import { useState, useEffect } from 'react'
 import apiConfigs from "../../api/apiConfigs"
 
@@ -29,6 +29,8 @@ function EmployeeManager() {
                             <tr>
                                 <th>Mã nhân viên</th>
                                 <th>Họ tên</th>
+                                <th>SĐT</th>
+                                <th>Email</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -37,9 +39,12 @@ function EmployeeManager() {
                                 <tr key={index}>
                                     <td>{nv.manv}</td>
                                     <td>{nv.hoten}</td>
-                                    <td className="d-flex">
-                                        <div className="edit mx-5"><FaEdit /></div>
-                                        <div className="delete"><FaTrashAlt /></div>
+                                    <td>{nv.sdt}</td>
+                                    <td>{nv.email}</td>
+                                    <td className="d-flex justify-content-sm-between">
+                                        <div className={style["edit"]}><FaEdit /></div>
+                                        <div className={style["delete"]}><FaTrashAlt /></div>
+                                        <div className={style["detail-list"]}><FaList /></div>
                                     </td>
                                 </tr>
                             ))}

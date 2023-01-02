@@ -3,15 +3,17 @@ import {FaEdit, FaTrashAlt} from "react-icons/fa"
 import { Fragment, useEffect, useState } from "react"
 import ModalUserOrderDetail from "../Modal/ModalUserOrderDetail"
 import apiConfig from "../../api/apiConfigs"
+import ModalEmployeeDelivery from "../Modal/ModalEmployeeDelivery"
 
 function OrderManager(){
     const [orderInfo, setOrderInfo] = useState([])
     const [modal, setModal] = useState(false)
     const [idGioHang, setIdGioHang] = useState("")
     const [type, setType] = useState("")
+    const [action, setAction] = useState("")
 
     useEffect(() => {
-        fetch(`${apiConfig.baseUrl}/giohang/trangthai/${type}`)
+        fetch(`${apiConfig.baseUrl}/giohang/${type === "" ? "" : ("trangthai/" + type)}`)
             .then((res) => res.json())
             .then((data) => {
                 setOrderInfo(data)
@@ -23,8 +25,9 @@ function OrderManager(){
         setType(matrangthai)
     }
 
-    const showModal = (idgiohang) => {
+    const showModal = (idgiohang, action) => {
         setIdGioHang(idgiohang)
+        action === "" ? setAction("") : setAction("edit")
         console.log("idGioHang" + idGioHang)
         return setModal(true)
     }
@@ -72,14 +75,19 @@ function OrderManager(){
                                 <td className={orders.trangThai.matrangthai === 1 
                                     ? `${style["to-ship"]}` 
                                     : (orders.trangThai.matrangthai === 2 ? `${style["to-receive"]}` : style["completed"])}>{orders.trangThai.trangthai}</td>
-                                <td><button className="btn btn-primary btn-order" onClick={() => showModal(orders.idgiohang)}>Chi tiết</button><FaEdit/></td>
+                                <td className={style["order-action"]}>
+                                    <button className="btn btn-primary btn-order" onClick={() => showModal(orders.idgiohang,"")}>Chi tiết</button>
+                                    {orders.trangThai.matrangthai === 1 
+                                    ? (<div className={style["order-edit"]} onClick={() => showModal(orders.idgiohang, "edit")}><FaEdit /></div>) 
+                                    : <Fragment></Fragment>}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                     </table>
                 </div>
             </div>
-            {modal === true ? <ModalUserOrderDetail hide={closeModal} idgiohang={idGioHang}/> : <Fragment/>}
+            {modal === true ? (action === "" ? <ModalUserOrderDetail hide={closeModal} idgiohang={idGioHang}/> : <ModalEmployeeDelivery hide={closeModal} idgiohang={idGioHang}/>) : <Fragment/>}
         </>
     )
 }

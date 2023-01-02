@@ -36,8 +36,11 @@ function UserOrder() {
     console.log(orderInfo)
     return (
         <>
-            <div className="col-md-12">
-                <table className="order">
+            <div className="order">
+                <div >
+                    <h2>Hồ sơ của tôi</h2>
+                </div>
+                <table className="order-table">
                     <thead>
                         <tr>
                             <th>Mã ĐH</th>
@@ -59,14 +62,18 @@ function UserOrder() {
                                 <td>{orders.sdtnguoinhan}</td>
                                 <td>{orders.ngay}</td>
                                 <td className="order-total">{orders.tongtien} $</td>
-                                <td className="order-status">{orders.trangThai.trangthai}</td>
+                                {/* <td className="order-status">{orders.trangThai.trangthai}</td> */}
+                                <td className={orders.trangThai.matrangthai === 1
+                                    ? "to-ship"
+                                    : (orders.trangThai.matrangthai === 2 ? "to-receive" : "completed")}>{orders.trangThai.trangthai}
+                                </td>
                                 <td><button className="btn btn-primary btn-order" onClick={() => showModal(orders.idgiohang)}>Chi tiết</button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-            {modal === true ? <ModalUserOrderDetail hide={closeModal} idgiohang={idGioHang}/> : <Fragment/>}
+            {modal === true ? <ModalUserOrderDetail hide={closeModal} idgiohang={idGioHang} /> : <Fragment />}
         </>
     )
 }

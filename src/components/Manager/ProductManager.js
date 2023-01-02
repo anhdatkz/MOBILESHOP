@@ -93,9 +93,9 @@ function ProductManager() {
                                         ? formatTien(caculate(lsp), '$')
                                         : formatTien(lsp.thayDoiGiasLSP[0].giamoi, '$')} </td>
                                     <td className="d-flex justify-content-between">
-                                        <div className={style["edit"]}><FaEdit /></div>
-                                        <div className={style["delete"]}><FaTrashAlt /></div>
-                                        <div className={style["detail-list"]}><FaList /></div>
+                                        <div className={style["edit"]} onClick={() => showModalAdd()}><FaEdit /></div>
+                                        <div className={style["delete"]} onClick={() => showModalAdd()}><FaTrashAlt /></div>
+                                        <div className={style["detail-list"]} onClick={() => showModalAdd()}><FaList /></div>
                                     </td>
                                 </tr>
                             ))}

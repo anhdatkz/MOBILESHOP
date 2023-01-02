@@ -15,12 +15,14 @@ import UserOrders from "./page/User/UserOrders"
 import UserOrderHistory from "./page/User/UserOrderHistory"
 import UserProfile from "./page/User/UserProfile"
 import UserReturn from "./page/User/UserReturn"
+import Search from "./page/Search/Search"
 
 
 
 const publicRoutes = [
     { path: "/", component: Home },
     { path: "/brand/:id", component: Brand },
+    { path: "/search=:query", component: Search },
     { path: "/detail-product/:id", component: ProductDetail },
     { path: "/detail-cart", component: CartDetails },
     { path: "/checkout", component: PayPal },

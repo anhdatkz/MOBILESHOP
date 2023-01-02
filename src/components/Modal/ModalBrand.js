@@ -105,7 +105,14 @@ function ModalBrand(props) {
             mahang: maHangRef.current.value.trim(),
             tenhang: tenHangRef.current.value.trim()
         }
-        handleAddBrand(formData)
+        if(maHangRef.current.value.trim() !== "" && tenHangRef.current.value.trim() !== ""){
+            handleAddBrand(formData)
+        } else{
+            toast.error("Thêm không thành công!", {
+                position: "top-center"
+            })
+        }
+        
         //console.log(formData)
     }
 
